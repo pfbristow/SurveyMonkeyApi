@@ -156,7 +156,14 @@ internal class TolerantJsonConverter : JsonConverter
     {
         if(GetType() == typeof(TolerantJsonConverter))
         {
-            Debug.Fail(string.Format("Json property {0} doesn't exist on object {1}", propertyName, type));
+            if (!Debugger.IsAttached)
+            {
+                throw new ArgumentException($"Json property {propertyName} doesn't exist on object {type}");
+            }
+            //else
+            //{
+            //    Debug.Fail($"Json property {propertyName} doesn't exist on object {type}");
+            //}
         }
     }
 }
